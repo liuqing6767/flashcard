@@ -1,0 +1,16 @@
+{
+    "Links": {
+        "RegisterActive": "http://10.99.202.18:8080/api/auth/register/active",
+        "LoginPage": "http://10.99.202.18:8080/login"
+    },
+    "TokenKey": "0123456789012345",
+    "Email": {
+        "User": "x@qq.com",
+        "Password": "123",
+        "Host": "smtp.mxhichina.com:25"
+    },
+    "XimuDB": {
+        "DBName": "Ximu",
+        "DSN": "root@tcp(127.0.0.1:8306)/ximu_flashcard?parseTime=true&charset=utf8&loc=Local"
+    }
+}
