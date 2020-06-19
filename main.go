@@ -21,7 +21,7 @@ func main() {
 	// Middleware
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
-	e.Logger.SetLevel(log.DEBUG)
+	// e.Logger.SetLevel(log.DEBUG)
 
 	// Routes
 	router.Route(e)
@@ -31,5 +31,5 @@ func main() {
 	}
 
 	// Start server
-	e.Logger.Fatal(e.Start(":8888"))
+	e.Logger.Fatal(e.Start(shared.AppConfSingleton.Port))
 }

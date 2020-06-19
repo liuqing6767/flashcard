@@ -2,6 +2,7 @@ package auth
 
 import (
 	"net/http"
+    "time"
 
 	"github.com/labstack/echo/v4"
 	"github.com/liuximu/flashcard/dao"
@@ -52,6 +53,7 @@ func Login(ctx echo.Context) shared.Rsp {
 
 	return shared.NewSuccJSONRsp(map[string]string{
 		"email": learner.Email,
+        "token": token,
 	})
 }
 
@@ -60,7 +62,8 @@ func sendToken(ctx echo.Context, token string) {
 	ctx.SetCookie(&http.Cookie{
 		Name:   "token",
 		Value:  token,
-		MaxAge: 3600 * 24 * 15,
+        Expires: time.Now().Add(15*24*time.Hour),
+        Path: "/",
 	})
 
 }

@@ -11,6 +11,7 @@ import (
 )
 
 type AppConf struct {
+    Port     string
 	TokenKey string
 	Links    struct {
 		RegisterActive string

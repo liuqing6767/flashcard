@@ -1,4 +1,6 @@
- CREATE DATABASE `ximu_flashcard` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */
+ CREATE DATABASE `ximu_flashcard` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_bin */;
+
+ use `ximu_flashcard`;
  
  CREATE TABLE `auth_learner` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,

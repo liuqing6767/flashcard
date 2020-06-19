@@ -3,9 +3,15 @@ import Vue from 'vue';
 
 Vue.prototype.$http = axios
 
-axios.defaults.baseURL = "http://10.99.202.18:8080/api"
-//axios.defaults.baseURL = "http://localhost:8080/api"
+axios.defaults.baseURL = "/api"
 axios.defaults.withCredentials = true;
+
+axios.interceptors.response.use(rsp => {
+    if (rsp.data.errno == 401) {
+        window.location.href = "/mine/login"
+    }
+    return rsp
+})
 
 export default {
     async get(path, params) {
