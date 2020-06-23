@@ -273,6 +273,13 @@ export default {
     },
     onDataClick() {
       let data = this.cardData.toLowerCase();
+      if (data == "") {
+        this.$notify.error({
+          title: "错误",
+          message: "单测不能为空"
+        });
+        return;
+      }
       if (data.indexOf(" ") != -1) {
         this.$notify.error({
           title: "错误",

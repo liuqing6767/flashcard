@@ -37,6 +37,7 @@ func (w *word) QueryOrCreate(ctx shared.Context, wor string) (*shared.Word, erro
 
 	wo, err := shared.NewWord(wor)
 	if err != nil {
+		ctx.Error(err)
 		return nil, err
 	}
 

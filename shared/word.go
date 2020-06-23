@@ -26,7 +26,6 @@ func NewWord(word string) (*Word, error) {
 
 	res, err := http.Get("https://www.collinsdictionary.com/zh/dictionary/english/" + word)
 	if err != nil {
-
 		return nil, err
 	}
 	defer res.Body.Close()
