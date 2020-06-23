@@ -6,6 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
+	"github.com/liuximu/flashcard/dao"
 	"github.com/liuximu/flashcard/service"
 	"github.com/liuximu/flashcard/shared"
 )
@@ -71,9 +72,27 @@ func LearningList(ctx echo.Context) shared.Rsp {
 	learner := GetUser(ctx)
 	ctx1 := shared.EchoCtx2LogCtx(ctx)
 
-	cardList, err := service.Card.GetListByKID(ctx1, int64(kid), learner, int64(cid))
+	_kid := int64(kid)
+	now := time.Now()
+	where := &dao.CardParam{
+		KnowID:           &_kid,
+		Uid:              &learner.ID,
+		MaxNextLearnTime: &now,
+	}
+	if cid != 0 {
+		_cid := int64(cid)
+		where.Id = &_cid
+	}
+	cardList, err := service.Card.GetListByKID(ctx1, where)
 	if err != nil {
 		return shared.ErrRspSysFail
+	}
+
+	if len(cardList) == 0 {
+		return shared.NewSuccJSONRsp(map[string]interface{}{
+			"cards":     cardList,
+			"templates": nil,
+		})
 	}
 
 	tidMap, tids := map[int64]bool{}, []int64{}

@@ -65,3 +65,20 @@ CREATE TABLE `card` (
 --   `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
 --   PRIMARY KEY (`id`)
 -- ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+
+
+CREATE TABLE `word` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `word` varchar(64) DEFAULT '' COMMENT 'word',
+  `content` varchar(8192) NOT NULL,
+  `status` tinyint(4) DEFAULT '0',
+  `create_time` datetime DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `u_word` (`word`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+INSERT INTO `card_template` VALUES 
+(1,'问答题模板','<div style=\"position:relative; width:100%; height:100%;\">\n    <div style=\"position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);\">\n        {{Q}}\n    </div>\n</div>','<div style=\"position:relative; width:100%; height:100%;\">\n    <div style=\"position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);\">\n        {{A}}\n    </div>\n</div>','{\n   \"Q\": \"问题是什么\",\n    \"A\": \"答案是什么\"\n}','Q',1,0,'2020-06-15 19:29:21'),
+(2,'选择题模板','<div style=\"position:relative; width:100%; height:100%;\">\n    <div style=\"position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);\">\n        <div>{{Q}}</div>\n        <div v-for=\"opt in Options\">{{opt}}</div>\n    </div>\n</div>','<div style=\"position:relative; width:100%; height:100%;\">\n    <div style=\"position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);\">\n        {{A}}\n    </div>\n</div>','{\n    \"Q\": \"世界上有几类人？\",\n    \"Options\": [\n        \"A 男人\",\n        \"B 女人\"\n    ],\n    \"A\": \"A, B\"\n}','Q',1,0,'2020-06-16 09:17:39'),
+(3,'单词模板','<div style=\"position:relative; width:100%; height:100%;\"> \n <audio id=\"pa\" autoplay style=\"display:none\"> \n  <source :src=\"Detail.wp\" type=\"audio/mpeg\"></source> \n </audio> \n <div style=\"position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);\">\n   <div><h3>{{Word}}</h3></div>\n  <div>\n   [{{Detail.p}}] \n   <button style=\"border:0\" onclick=\"document.getElementById(\'pa\').play()\">⏯</button> \n  </div> \n </div> \n</div>','<div style=\"position:relative; width:100%; height:100%;\"> \n <audio id=\"pb\" autoplay style=\"display:none\"> \n  <source :src=\"Detail.ep\" type=\"audio/mpeg\"></source> \n </audio> \n <div style=\"position:absolute; top:50%; left:50%; transform: translate(-50%, -50%);\"> \n  <div style=\"line-height:20px\">\n    {{Detail.d}} \n  </div> \n  <div style=\"line-height:20px; padding-top:20px\">\n    {{Detail.e}} \n    <button style=\"border:0\" onclick=\"document.getElementById(\'pb\').play()\">⏯</button> \n  </div> \n </div> \n</div>','{\n    \"Word\": \"legacy\",\n    \"Detail\": {\n        \"w\":\"legacy\",\n        \"wp\":\"https://www.collinsdictionary.com/zh/sounds/hwd_sounds/31300.mp3\",\n        \"p\":\"legəsi\",\n        \"d\":\"A legacy is money or property which someone leaves to you when they die.\",\n        \"e\":\"You could make a real difference to someone\'s life by leaving them a generous legacy.\",\n        \"ep\":\"https://www.collinsdictionary.com/zh/sounds/hwd_sounds/en_gb_exa_you_could_make_a_real_difference_to_someone_s_life_by_leaving_them_a_generous_legacy.mp3\"\n    }\n}','Word',1,0,'2020-06-23 15:57:57');

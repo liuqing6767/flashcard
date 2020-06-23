@@ -37,6 +37,7 @@ func Route(e *echo.Echo) {
 	cardGroup.GET("/:id", shared.Mine2Handler(card.One))
 	cardGroup.POST("/:id/del", shared.Mine2Handler(card.Delete))
 	cardGroup.POST("", shared.Mine2Handler(card.Upsert))
+	cardGroup.GET("/word/:word", shared.Mine2Handler(card.WordQuery))
 
 	cardGroup.GET("/learning/:kid", shared.Mine2Handler(card.LearningList))
 	cardGroup.POST("/progress", shared.Mine2Handler(card.UpdateLearnProgress))

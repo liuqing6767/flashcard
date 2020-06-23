@@ -21,6 +21,11 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     routes: [{
+            name: "main",
+            path: '/', // 所有知识点列表
+            component: Knowledge,
+        },
+        {
             name: "know",
             path: '/know', // 所有知识点列表
             component: Knowledge,

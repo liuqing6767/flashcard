@@ -5,7 +5,8 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/gommon/log"
+
+	// "github.com/labstack/gommon/log"
 
 	"github.com/liuximu/flashcard/router"
 	"github.com/liuximu/flashcard/shared"

@@ -5,6 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
+	"github.com/liuximu/flashcard/dao"
 	"github.com/liuximu/flashcard/service"
 	"github.com/liuximu/flashcard/shared"
 )
@@ -38,7 +39,11 @@ func List(ctx echo.Context) shared.Rsp {
 	learner := GetUser(ctx)
 	ctx1 := shared.EchoCtx2LogCtx(ctx)
 
-	list, err := service.Card.GetListByKID(ctx1, int64(kid), learner, 0)
+	_kid := int64(kid)
+	list, err := service.Card.GetListByKID(ctx1, &dao.CardParam{
+		KnowID:  &_kid,
+		Uid: &learner.ID,
+	})
 	if err != nil {
 		return shared.ErrRspSysFail
 	}

@@ -143,19 +143,11 @@ func (c *card) GetByID(ctx shared.Context, id int64, learner *Learner) (*CardDet
 	return newCardDetail(one), nil
 }
 
-func (c *card) GetListByKID(ctx shared.Context, kid int64, learner *Learner, cid int64) ([]*CardDetail, error) {
+func (c *card) GetListByKID(ctx shared.Context, where *dao.CardParam) ([]*CardDetail, error) {
 	list := dao.CardList{}
 	order := "next_learn_time asc"
-	where := &dao.CardParam{
-		KnowID:  &kid,
-		OrderBy: &order,
-	}
-	if cid != 0 {
-		where.Id = &cid
-	}
-	if learner != nil {
-		where.Uid = &learner.ID
-	}
+	where.OrderBy = &order
+
 	if err := list.Query(ctx, dao.XimuFlashcard(), where, nil); err != nil {
 		ctx.Error(err)
 		return nil, err

@@ -1,4 +1,4 @@
-<template>
+<template v-loading="loading">
   <div class="fc-card-create">
     <bread-crumb
       :breadcrumb="{items:[{name:'配置', path:''}, {name:'卡片', path: '/card' } ,{name:'编辑', path: '' }]}"
@@ -42,7 +42,13 @@
             </el-row>
             <el-row>
               <el-col :span="12">
-                <el-input type="textarea" v-model="cardData" placeholder="卡片内容" :rows="30"></el-input>
+                <el-input
+                  type="textarea"
+                  v-model="cardData"
+                  @dblclick.native="onDataClick"
+                  placeholder="卡片内容，单词模板可输入单测后双击完成编辑"
+                  :rows="30"
+                ></el-input>
               </el-col>
               <el-col :span="12">
                 <el-input
@@ -139,7 +145,8 @@ export default {
       cardData: "",
       templateID: "",
       remeberCurve: 1,
-      knowID: 0
+      knowID: 0,
+      loading: false
     };
 
     if (this.$route.params.card_id) {
@@ -263,6 +270,38 @@ export default {
     },
     onDemoClick() {
       this.cardData = this.templateMap[this.templateID].data_demo;
+    },
+    onDataClick() {
+      let data = this.cardData.toLowerCase();
+      if (data.indexOf(" ") != -1) {
+        this.$notify.error({
+          title: "错误",
+          message: "当前只只能记忆单测，不能记忆句子"
+        });
+        return;
+      }
+      this.loading = true;
+      this.$http
+        .get("/card/word/" + data)
+        .then(res => {
+          this.loading = false;
+          if (res.data.errno != 0) {
+            this.$notify.error({
+              title: "错误",
+              message: res.data.msg
+            });
+            return;
+          }
+
+          let obj = {
+            Word: data,
+            Detail: res.data.data
+          };
+          this.cardData = JSON.stringify(obj, null, 4);
+        })
+        .catch(err => {
+          window.console.log(err);
+        });
     },
     goBack(arg) {
       let timeout = 2000;

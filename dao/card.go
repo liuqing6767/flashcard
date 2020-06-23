@@ -36,9 +36,10 @@ type CardParam struct {
 	Data       *string `ddb:"data" json:"data"`
 	Status     *int8   `ddb:"status" json:"status"`
 
-	MemoryCurveID *int64     `ddb:"mid" json:"mid"`
-	Progress      *int8      `ddb:"progress" json:"progress"`
-	NextLearnTime *time.Time `ddb:"next_learn_time" json:"next_learn_time"`
+	MemoryCurveID    *int64     `ddb:"mid" json:"mid"`
+	Progress         *int8      `ddb:"progress" json:"progress"`
+	NextLearnTime    *time.Time `ddb:"next_learn_time" json:"next_learn_time"`
+	MaxNextLearnTime *time.Time `ddb:"next_learn_time,<"`
 
 	CreateTime *time.Time `ddb:"create_time" json:"create_time"`
 

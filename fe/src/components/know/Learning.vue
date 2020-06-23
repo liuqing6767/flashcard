@@ -137,6 +137,18 @@ export default {
           return;
         }
 
+        if (!res.data.data.cards || res.data.data.cards.length == 0) {
+          this.$notify.error({
+            title: "错误",
+            message: "没有需要学习的内容，即将返回"
+          });
+
+          setTimeout(() => {
+            this.onExitBtnClick();
+          }, 2000);
+          return;
+        }
+
         this.cards = res.data.data.cards;
         this.templates = res.data.data.templates;
         for (let i = 0; i < this.templates.length; i++) {
