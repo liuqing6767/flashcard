@@ -1,6 +1,7 @@
 package shared
 
 import (
+	"crypto/tls"
 	"fmt"
 	"net/http"
 	"strings"
@@ -23,8 +24,15 @@ func NewWord(word string) (*Word, error) {
 		str = strings.TrimSpace(str)
 		return strings.Replace(str, "\n", "", -1)
 	}
+	client := &http.Client{
+		Transport: &http.Transport{ //解决x509: certificate signed by unknown authority
+			TLSClientConfig: &tls.Config{InsecureSkipVerify: true},
+		},
+	}
+	url := "https://www.collinsdictionary.com/zh/dictionary/english/" + word
+	req, err := http.NewRequest("GET", url, nil)
 
-	res, err := http.Get("https://www.collinsdictionary.com/zh/dictionary/english/" + word)
+	res, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}
