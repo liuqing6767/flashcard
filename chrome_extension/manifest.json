@@ -20,7 +20,8 @@
     "permissions": [
         "contextMenus",
         "cookies",
-        "http://fc.liuximu.com/*"
+        "http://fc.liuximu.com/*",
+        "notifications"
     ],
     "browser_action": {
         "default_icon": {

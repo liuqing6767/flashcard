@@ -39,6 +39,32 @@ function httpRequest(url, callback){
     xhr.send();
 }
 
+function notification(msg){
+    if (!("Notification" in window)) {
+        alert(msg)
+        return    
+    }
+    
+    // check whether notification permissions have alredy been granted
+    if (Notification.permission === "granted") {
+        // If it's okay let's create a notification
+        new Notification(msg);
+    }
+    
+    // Otherwise, ask the user for permission
+    
+    if (Notification.permission !== 'denied') {
+        Notification.requestPermission(function (permission) {
+            // If the user accepts, let's create a notification
+            if (permission === "granted") {
+                 new Notification(msg);
+            }else {
+                alert(msg)
+            }
+        });
+    }
+}
+
 function addWord(info, tab){
     chrome.cookies.get({
         url: 'http://fc.liuximu.com',
@@ -59,7 +85,9 @@ function addWord(info, tab){
             try {
                 obj = JSON.parse(respone)
                 if (obj.errno !== 0) {
-                    window.alert("添加 '" +message + "'失败: " + obj.msg)
+                    notification("添加 '" +message + "'失败: " + obj.msg)
+                }else {
+                    notification("添加 '" +message + "'成功") 
                 }
             } catch (error) {
                 console.log(error);
@@ -73,11 +101,11 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     if (!!! message) {
 
     chrome.contextMenus.update(menuID,{
-        'title':'FCW: disabled: 只能添加英文单词'
+        'title':'FCW Disabled: 只能添加英文单词'
     });
         return
     }
     chrome.contextMenus.update(menuID,{
-        'title':'FCW: 加入单词“'+message+'”'
+        'title':'FCW: 添加单词“'+message+'”'
     });
 });
