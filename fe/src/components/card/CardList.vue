@@ -74,6 +74,9 @@ export default {
       });
     },
     onCardClick(card_id) {
+      if(this.editing) {
+        return;
+      }
       this.$router.push({
         name: "learning",
         params: {

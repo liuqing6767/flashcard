@@ -1,6 +1,8 @@
 fe/node_modules
-flashcard
-vendor
+be/vendor
+be/be
+be/access.log
+*.swp
 
 .vscode
-be
+
