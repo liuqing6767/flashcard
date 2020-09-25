@@ -127,12 +127,23 @@ func (c *card) GetLeariningCount(ctx shared.Context, learner *Learner) (int64, e
 	return count, nil
 }
 
+func (c *card) GetByName(ctx shared.Context, name string, learner *Learner) (*CardDetail, error) {
+	return c.Get(ctx, &dao.CardParam{
+		Name: &name,
+		Uid:  &learner.ID,
+	})
+}
+
 func (c *card) GetByID(ctx shared.Context, id int64, learner *Learner) (*CardDetail, error) {
-	one := &dao.Card{}
-	err := one.Query(ctx, dao.XimuFlashcard(), &dao.CardParam{
+	return c.Get(ctx, &dao.CardParam{
 		Id:  &id,
 		Uid: &learner.ID,
-	}, nil)
+	})
+}
+
+func (c *card) Get(ctx shared.Context, where *dao.CardParam) (*CardDetail, error) {
+	one := &dao.Card{}
+	err := one.Query(ctx, dao.XimuFlashcard(), where, nil)
 	if err != nil {
 		if shared.EmptyResult(err) {
 			return nil, nil

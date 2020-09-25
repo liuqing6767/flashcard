@@ -8,6 +8,8 @@ import (
 	"github.com/liuximu/sqlmy"
 )
 
+const WordTemplateID int64 = 4
+
 const cardTemplateTable = "card_template"
 
 type CardTemplate struct {

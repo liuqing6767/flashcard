@@ -12,13 +12,17 @@ func MustLogin(ctx echo.Context) error {
 	// })
 	// return nil
 
-	tokenCookie, err := ctx.Cookie("token")
-	if err != nil {
-		shared.ErrRspUserNoLogin.Render(ctx)
-		return err
+	tokenString := ctx.QueryParam("token")
+	if tokenString == "" {
+		tokenCookie, err := ctx.Cookie("token")
+		if err != nil {
+			shared.ErrRspUserNoLogin.Render(ctx)
+			return err
+		}
+		tokenString = tokenCookie.Value
 	}
 	ctx1 := shared.EchoCtx2LogCtx(ctx)
-	learner, err := service.Auth.GetUserByToken(ctx1, tokenCookie.Value)
+	learner, err := service.Auth.GetUserByToken(ctx1, tokenString)
 	if err != nil {
 		shared.ErrRspUserNoLogin.Render(ctx)
 		return err
