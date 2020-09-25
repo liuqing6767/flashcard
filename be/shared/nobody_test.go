@@ -19,6 +19,11 @@ func TestIsEnglishWord(t *testing.T) {
 			want: false,
 		},
 		{
+			name: "4",
+			s:    "我",
+			want: false,
+		},
+		{
 			name: "3",
 			s:    "hello 中国",
 			want: false,

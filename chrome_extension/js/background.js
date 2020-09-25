@@ -1,8 +1,17 @@
+var menuID = 'word.flash_card'
+var menu = {
+    'type':'normal',
+    'title':'将单词加入FlashCard',
+    'contexts':['selection'],
+    'id': menuID,
+    'onclick':addWord
+}
+
 chrome.contextMenus.create({
     'type':'normal',
     'title':'将单词加入FlashCard',
     'contexts':['selection'],
-    'id':'word.flash_card',
+    'id': menuID,
     'onclick':addWord
 });
 
@@ -11,7 +20,12 @@ function goLogin() {
 }
 
 function firstWord(word) {
-    return word.trim().split(" ")[0]
+    word =  word.trim().split(" ")[0]
+    if(!!! word.match(/^[A-Za-z]+$/)) {
+        return false
+    }
+
+    return word
 }
 
 function httpRequest(url, callback){
@@ -57,9 +71,13 @@ function addWord(info, tab){
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
     message = firstWord(message)
     if (!!! message) {
+
+    chrome.contextMenus.update(menuID,{
+        'title':'FCW: disabled: 只能添加英文单词'
+    });
         return
     }
-    chrome.contextMenus.update('word.flash_card',{
-        'title':'将单词“'+message+'”加入FCW'
+    chrome.contextMenus.update(menuID,{
+        'title':'FCW: 加入单词“'+message+'”'
     });
 });
