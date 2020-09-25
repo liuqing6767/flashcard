@@ -19,6 +19,10 @@ func UpsertExt(ctx echo.Context) shared.Rsp {
 	if word == "" || strings.Index(word, " ") != -1 {
 		return shared.ErrRspBadParam
 	}
+	if !shared.IsEnglishWord(word) {
+		return shared.ErrRspBadParam
+	}
+
 	word = strings.ToLower(word)
 	ctx1 := shared.EchoCtx2LogCtx(ctx)
 	one, err := service.Word.QueryOrCreate(ctx1, word)

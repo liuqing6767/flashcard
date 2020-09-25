@@ -15,6 +15,9 @@ func WordQuery(ctx echo.Context) shared.Rsp {
 		return shared.ErrRspBadParam
 	}
 	word = strings.ToLower(word)
+	if !shared.IsEnglishWord(word) {
+		return shared.ErrRspBadParam
+	}
 
 	ctx1 := shared.EchoCtx2LogCtx(ctx)
 	one, err := service.Word.QueryOrCreate(ctx1, word)

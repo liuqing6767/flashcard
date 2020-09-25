@@ -1,0 +1,1 @@
+window.open('http://fc.liuximu.com', '_blank');
