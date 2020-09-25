@@ -54,7 +54,10 @@ func UpsertExt(ctx echo.Context) shared.Rsp {
 		return shared.NewSuccJSONRsp(nil)
 	}
 
-	wordBs, err := json.Marshal(one)
+	wordBs, err := json.Marshal(map[string]interface{}{
+		"Word":   one.Word,
+		"Detail": one,
+	})
 	if err != nil {
 		return shared.ErrRspBadParam
 	}

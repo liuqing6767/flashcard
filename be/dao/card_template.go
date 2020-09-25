@@ -8,7 +8,7 @@ import (
 	"github.com/liuximu/sqlmy"
 )
 
-const WordTemplateID int64 = 4
+const WordTemplateID int64 = 3
 
 const cardTemplateTable = "card_template"
 
