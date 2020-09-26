@@ -109,3 +109,8 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
         'title':'FCW: 添加单词“'+message+'”'
     });
 });
+
+chrome.omnibox.setDefaultSuggestion({'description':'快速添加单词到FlashCard'})
+chrome.omnibox.onInputEntered.addListener(function (text, disposition){
+    addWord({selectionText:text})
+})

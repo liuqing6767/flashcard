@@ -62,6 +62,7 @@ export default {
           if (res.data.errno == 0) {
             SetUser(res.data.data.email);
             window.location.href = "/know";
+            return;
           }
           this.$notify.error({
             title: "错误",

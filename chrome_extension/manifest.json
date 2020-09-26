@@ -30,5 +30,8 @@
         },
         "default_title": "FCW",
         "default_popup": "tab.html"
+    },
+    "omnibox": {
+        "keyword": "fcw"
     }
 }

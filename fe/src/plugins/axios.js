@@ -15,7 +15,6 @@ axios.interceptors.response.use(rsp => {
 
 export default {
     async get(path, params) {
-        window.console.log(1)
         try {
             return await axios.get(path, params)
         } catch (err) {
@@ -23,9 +22,7 @@ export default {
         }
     },
 
-
     async post(path, params) {
-        window.console.log(1)
         try {
             return await axios.post(path, params)
         } catch (err) {
